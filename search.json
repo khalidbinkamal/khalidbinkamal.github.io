@@ -1,0 +1,79 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Md Khalid Bin Kamal",
+    "section": "",
+    "text": "PhD Student — Public Policy & Political Economy\nUniversity of Texas at Dallas\nCV | Google Scholar | khalid@utdallas.edu\n\nI study how institutions, policies, and political shocks shape economic outcomes, particularly in developing contexts. My research applies causal inference methods to evaluate real-world policy interventions in governance, labor markets, and welfare systems.\n\n\n\n\nArticle on secession and food prices published in Agricultural and Food Economics (2025)\n\nPaper on Yemen food price inflation accepted in Humanities and Social Sciences Communications (2025)\nPresenting research at the 2026 Midwest Political Science Association (MPSA) Conference, Chicago.\nPresenting research at the 2026 Western Social Science Association (WSSA) Conference.\n\n\n\n\n\n\nKnowledge Mining\n\nEconomics for Public Policy\n\nPolitical and Civic Organizations\n\n\n\n\n\nEmail: khalid@utdallas.edu\nAlternate: khalidbinkamal@gmail.com\nUniversity of Texas at Dallas"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Public service has shaped my life from an early age. As a third-generation public servant from Bangladesh and now a Joint Director at Bangladesh Bank, I have spent over a decade working on development policy and financial sector programs. In that role, I witnessed how carefully designed policies can improve livelihoods—and how poorly designed ones can unintentionally restrict opportunity. Those experiences led me to pursue doctoral research in Public Policy and Political Economy at the University of Texas at Dallas.\nMy research focuses on how institutions, governance structures, and policy design influence economic outcomes, particularly in developing and politically complex environments. I use empirical methods and causal inference approaches to study how public policies affect real-world welfare and development trajectories.\nI aim to produce scholarship that bridges rigorous academic analysis with practical policy relevance, contributing to institutional design and public policy reforms that promote equitable and sustainable development."
+  },
+  {
+    "objectID": "index.html#updates",
+    "href": "index.html#updates",
+    "title": "Md Khalid Bin Kamal",
+    "section": "",
+    "text": "Article on secession and food prices published in Agricultural and Food Economics (2025)\n\nPaper on Yemen food price inflation accepted in Humanities and Social Sciences Communications (2025)\nPresenting research at the 2026 Midwest Political Science Association (MPSA) Conference, Chicago.\nPresenting research at the 2026 Western Social Science Association (WSSA) Conference."
+  },
+  {
+    "objectID": "index.html#current-coursework-spring-2026",
+    "href": "index.html#current-coursework-spring-2026",
+    "title": "Md Khalid Bin Kamal",
+    "section": "",
+    "text": "Knowledge Mining\n\nEconomics for Public Policy\n\nPolitical and Civic Organizations"
+  },
+  {
+    "objectID": "index.html#contact",
+    "href": "index.html#contact",
+    "title": "Md Khalid Bin Kamal",
+    "section": "",
+    "text": "Email: khalid@utdallas.edu\nAlternate: khalidbinkamal@gmail.com\nUniversity of Texas at Dallas"
+  },
+  {
+    "objectID": "research.html",
+    "href": "research.html",
+    "title": "Research",
+    "section": "",
+    "text": "Political economy · Development economics · Institutions · Labor markets · Migration · Policy evaluation · Causal inference"
+  },
+  {
+    "objectID": "research.html#research-interests",
+    "href": "research.html#research-interests",
+    "title": "Research",
+    "section": "",
+    "text": "Political economy · Development economics · Institutions · Labor markets · Migration · Policy evaluation · Causal inference"
+  },
+  {
+    "objectID": "research.html#current-projects",
+    "href": "research.html#current-projects",
+    "title": "Research",
+    "section": "Current Projects",
+    "text": "Current Projects\n\nWrongful Discharge Laws & Employee Productivity\nCore question:\nDo employment protection doctrines improve or reduce firm productivity?\nWhat I am doing:\nThis project estimates the causal impact of wrongful discharge laws on firm-level productivity outcomes using panel data on U.S. public firms. The study evaluates competing theoretical predictions about employment protection and labor market efficiency.\nMethods: Difference-in-Differences, fixed effects panel models, entropy balancing robustness checks.\nKeywords: labor regulation, employment protection, productivity, causal inference, labor economics.\nStatus: Paper prepared for conference presentation (MPSA 2026, Chicago).\n\n\n\nEmployer-Sponsored Childcare & Employee Retention\nCore question:\nDoes access to employer-provided childcare reduce employee turnover?\nWhat I am doing:\nThis project examines the causal effect of workplace childcare provision on employee retention using quasi-experimental policy thresholds that generate exogenous variation in eligibility.\nMethods: Fuzzy Regression Discontinuity Design, local treatment effects estimation.\nKeywords: labor markets, gender economics, workplace policy, retention, causal inference.\nStatus: Accepted for presentation at the Western Social Science Association Conference (2026, U.S.).\n\n\n\nShelby County v. Holder and Fiscal Equity\nCore question:\nHow did the removal of federal preclearance requirements affect distributive policy outcomes?\nWhat I am doing:\nThis study evaluates whether the 2013 Supreme Court decision altered state-level public spending patterns, focusing on education, healthcare, and welfare allocations.\nMethods: Difference-in-Differences, event-study models, state-year panel analysis.\nKeywords: voting rights, federalism, redistribution, public finance, institutional change.\n\n\n\nReducing Waste of Scarce Clinical Resources: AI Prediction of Patient No-Shows\nCore question:\nCan predictive analytics improve healthcare resource allocation efficiency?\nWhat I am doing:\nThis project analyzes whether statistical prediction of appointment no-shows can reduce wasted clinical resources and improve scheduling efficiency. The study treats missed appointments as an economic allocation problem rather than purely behavioral non-compliance.\nMethods: Logistic prediction models, simulation of targeted interventions, cost-benefit analysis.\nKeywords: health economics, predictive analytics, resource allocation, applied microeconomics.\nStatus: Ongoing project (2026).\n\n\n\nImpact of E-Wallet Usage on Cashless Purchase Decisions\nCore question:\nDoes digital wallet adoption causally increase cashless spending behavior?\nWhat I am doing:\nThis project evaluates the causal effect of mobile e-wallet usage on digital purchasing behavior using a randomized encouragement field experiment conducted in Khulna, Bangladesh. Individuals randomly offered assistance installing a payment app are compared to a control group to identify behavioral changes attributable to adoption.\nMethods: Randomized Encouragement Design, instrumental variables estimation, two-stage least squares.\nKeywords: digital finance, financial inclusion, technology adoption, field experiments.\nStatus: Working paper."
+  },
+  {
+    "objectID": "research.html#working-papers-preprints",
+    "href": "research.html#working-papers-preprints",
+    "title": "Research",
+    "section": "Working Papers & Preprints",
+    "text": "Working Papers & Preprints\nImpact of E-Wallet App Usage on Cashless Purchase Decision: Evidence from Field Experiment\nField experiment on digital payments showing that increased e-wallet usage significantly raises cashless purchases, particularly for non-food items, while leaving food purchases unaffected. :contentReferenceoaicite:0\nIn the Blast Radius: The Effect of Airstrikes on Household Food Security and Dietary Diversity in Gaza\nJoint work examining the impact of conflict exposure on food security outcomes using household-level data.\nThe Impact of Employer-Sponsored Childcare Facilities on Employee Retention: A Fuzzy Regression Discontinuity Approach\nQuasi-experimental study estimating retention effects of workplace childcare provision."
+  },
+  {
+    "objectID": "research.html#peer-reviewed-publications",
+    "href": "research.html#peer-reviewed-publications",
+    "title": "Research",
+    "section": "Peer-Reviewed Publications",
+    "text": "Peer-Reviewed Publications\nExploring the Impact of Secession on Food Prices: A Case Study of Sudan\nAgricultural and Food Economics (2025)\nDifference-in-Differences analysis showing substantial post-secession increases in food prices.\nFrom Revolution to Inflation: The Economic Consequences of the Arab Spring on Yemen’s Food Prices\nHumanities and Social Sciences Communications (2025)\nEmpirical study linking political instability to food inflation dynamics.\nImpact of Water Supply Disruption on Food Insecurity Experience: Evidence from Kyrgyz Farming Households\nJurnal Ekonomi Pembangunan (2025)\nHousehold-level analysis of infrastructure shocks and food insecurity."
+  },
+  {
+    "objectID": "research.html#earlier-research",
+    "href": "research.html#earlier-research",
+    "title": "Research",
+    "section": "Earlier Research",
+    "text": "Earlier Research\nConsumer Adoption of Mobile Financial Services in Bangladesh: A Randomized Conjoint Experiment\nIDEC Discussion Paper Series (2020)\nExperimental analysis of consumer decision-making in mobile finance adoption."
+  }
+]
