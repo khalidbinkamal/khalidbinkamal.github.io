@@ -360,8 +360,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="frequency-table-and-barchart-of-tondu" class="level3">
 <h3 class="anchored" data-anchor-id="frequency-table-and-barchart-of-tondu">9. Frequency Table and Barchart of Tondu</h3>
-<p>[cite_start]Finally, I need to generate a frequency table and a barchart for the main variable, <code>Tondu</code>. [cite_start]Before I can do that, I must assign the proper text labels to the numeric codes provided in the dataset.</p>
-<p>[cite_start]While the assignment instructions suggest using <code>as.numeric()</code>, standard R graphics require the variable to be converted into a <code>factor</code> to properly display text labels on a barchart.</p>
+<p>Finally, I need to generate a frequency table and a barchart for the main variable, <code>Tondu</code>. Before I can do that, I must assign the proper text labels to the numeric codes provided in the dataset.</p>
+<p>While the assignment instructions suggest using <code>as.numeric()</code>, standard R graphics require the variable to be converted into a <code>factor</code> to properly display text labels on a barchart.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign categorical labels to the Tondu variable</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>TEDS_2016<span class="sc">$</span>Tondu <span class="ot">&lt;-</span> <span class="fu">factor</span>(TEDS_2016<span class="sc">$</span>Tondu, </span>
