@@ -1,0 +1,368 @@
+---
+title: "Weekly Reflections"
+subtitle: "EPPS 6323 Knowledge Mining — Spring 2026"
+author: "Md Khalid Bin Kamal"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    toc-title: "Reflections"
+    theme: cosmo
+    self-contained: true
+    smooth-scroll: true
+page-layout: article
+---
+
+::: {.callout-note appearance="minimal"}
+This page documents my weekly reflections for EPPS 6323 Knowledge Mining, Spring 2026. Each entry responds to the prompts assigned for that week. These are personal reflections — not polished academic writing. I am a PhD student from Bangladesh. English is my third language. I write the way I think.
+:::
+
+------------------------------------------------------------------------
+
+## Week 3 {#week3}
+
+#### February 10, 2026
+
+### AI and Originality; What is AGI?
+
+**AI and Originality**
+
+I have a confession. Half of my literature notes last week were written with Claude. It was good. Maybe too good. That scared me a little.
+
+Originality is not just about having a new idea. It is about having *your* idea. AI echoes what already exists. It is fast and comprehensive, but it is not original.
+
+Perhaps the real threat is not that AI replaces our ideas. It is that we stop bothering to have them. That is what worries me most.
+
+**What is AGI?**
+
+AGI — Artificial General Intelligence — can do anything a human mind can do. We are not there yet. But the direction seems clear enough to be unsettling.
+
+In public policy research, so much depends on judgment. Why does a government choose one redistribution strategy over another? That is not a pattern recognition problem. It requires context, history, and intuition.
+
+I could be wrong about all of this. And that uncertainty might be the most honest thing I can say about AGI right now.
+
+------------------------------------------------------------------------
+
+## Week 4 {#week4}
+
+#### February 17, 2026
+
+### Using AI in My Research
+
+**How to Start Using AI for My Project**
+
+Starting was the hardest part. I did not know where AI fit into my research. Should it help me read? Write? Code? All of the above?
+
+Eventually I stopped overthinking it. I started small. I asked Claude to help me understand a paper I was struggling with. It worked. That was the beginning.
+
+Now AI is part of almost every stage of my workflow. It is especially useful for brainstorming and polishing my language. English is my third language. Having an AI that can clean up my writing without losing my meaning is, honestly, a relief.
+
+**Claude and ChatGPT: Two Different Tools**
+
+I use them differently. Claude is my coding partner. It is cleaner, more accurate, and better at catching logical errors. When I am writing R code for my labor policy analysis, Claude is my first stop.
+
+ChatGPT is better for creative tasks. Slides, visual summaries, brainstorming research angles. It has a certain flair that Claude does not always match.
+
+Perhaps the best way to put it: Claude makes my work rigorous. ChatGPT makes it presentable.
+
+------------------------------------------------------------------------
+
+## Week 5 {#week5}
+
+#### February 24, 2026
+
+### Knowledge, Information, and AI Failures
+
+**How Do Humans Find Knowledge?**
+
+Information is everywhere. Knowledge is rare.
+
+When I read that Bangladesh's remittance inflows increased by 15% last year, that is information. When I understand *why* it happened, what policy conditions enabled it, and what it means for redistribution, that is knowledge.
+
+Humans find knowledge through context, experience, and judgment. We connect dots that data alone cannot connect. That is perhaps what makes human researchers still relevant in an age of AI.
+
+**A List of AI Failures. Any Pattern?**
+
+I have collected enough AI failures to write a small comedy.
+
+*Hallucinated citations.* This one is dangerous. AIs cite papers that do not exist. Confidently. Beautifully formatted. Completely fabricated. I learned this the hard way. Now I download and read every single article AI references before I use it. Every single one.
+
+*Faulty code.* I have lost hundreds of hours to this. AI writes code that looks right but does not run. I ask for a fix. The fix is also wrong. I ask again. Still wrong. It is like asking for directions from someone who has never left the house.
+
+*Outdated facts argued with confidence.* My favorite example: I asked ChatGPT about Bangladesh's political situation in 2025. It told me Sheikh Hasina was still Prime Minister. She was ousted in August 2024 following a mass uprising. When I corrected it, ChatGPT argued with me. I was so amused I took a screenshot and posted it on Facebook.
+
+The pattern? AI fails most when it is most confident. That is worth remembering every time we are tempted to trust it without verification.
+
+------------------------------------------------------------------------
+
+## Week 6 {#week6}
+
+#### March 3, 2026
+
+### My First ML Pipeline: What Accuracy Does Not Tell You
+
+**Starting the Pipeline**
+
+My first ML pipeline was simple. I tried to predict whether someone voted for Tsai Ing-wen in Taiwan's 2016 election using age, education, and income.
+
+I started with OLS regression. It ran. It looked fine. Then I realized the dependent variable only takes two values — 0 or 1. OLS was predicting negative probabilities. That is not fine.
+
+I switched to logistic regression. Accuracy came out at 63.1%. Looked okay. It was not.
+
+**What Accuracy Did Not Tell Me**
+
+The confusion matrix was embarrassing. The model was calling almost everyone a Tsai voter. It was not learning anything. It was just making one lazy guess repeatedly.
+
+Accuracy did not catch this. Error analysis did.
+
+This matters for policy work. If a model flags everyone as high-risk, the accuracy might still look acceptable. But the policy would be useless.
+
+**Overfitting: Knowledge vs. Noise**
+
+Overfitting is when a model memorizes the data instead of learning from it. It works great on training data. It fails everywhere else.
+
+I think of it this way. Noise is random. Knowledge is pattern. An overfit model cannot tell the difference. It treats both as equally important.
+
+For redistribution and labor policy research, this is a real problem. A model built on noise will give wrong answers the moment real-world conditions change slightly. And in policy, conditions always change.
+
+------------------------------------------------------------------------
+
+## Week 7 {#week7}
+
+#### March 24, 2026
+
+### Prediction vs. Explanation; A Causal Diagram from My Research
+
+**Prediction vs. Explanation: When Does It Matter?**
+
+Sometimes knowing *what* will happen is enough. A hospital predicting which patients will miss appointments does not need to know *why*. It just needs to call them.
+
+But in policy research, *why* almost always matters. If I know that employment protection laws reduce labor productivity, that is useful. But if I do not know *why*, I cannot design a better policy. Is it moral hazard? Is it reduced firm investment? Is it something else entirely? The answer changes everything.
+
+My MPSA paper is fundamentally about explanation, not prediction. I could have built a model that predicts productivity drops in certain states. But that would not tell policymakers anything actionable. The point was to isolate the *mechanism* — the Good Faith exception specifically — and show that it weakens the dismissal threat, which then reduces worker effort. That causal story is what makes the finding useful.
+
+**A Causal Diagram from My Research**
+
+The core relationship in my paper is:
+
+**Good Faith Exception → Lower Labor Productivity**
+
+But this relationship does not exist in a vacuum. Several confounders could explain both the adoption of the law and the productivity change:
+
+-   **State economic conditions** — struggling economies may adopt protective laws *and* have lower productivity
+-   **Industry composition** — R&D-heavy states may look different from manufacturing states
+-   **Firm size** — large firms adapt more easily to legal changes
+-   **Political environment** — more democratic states may adopt both protective laws and different economic policies
+
+This is exactly why I used a staggered Difference-in-Differences design. The laws were adopted by state courts at different times, not by legislatures responding to economic conditions. That staggered adoption is what makes the treatment plausibly exogenous.
+
+The Weibull hazard model confirmed this. Lagged state productivity did not predict when a state adopted the Good Faith exception. The law arrived independently of economic trends. That is what separates a causal claim from a simple predictive association — the treatment was not chosen because of the outcome.
+
+------------------------------------------------------------------------
+
+## Week 8 {#week8}
+
+#### March 31, 2026
+
+### Text Mining, NLP, LLMs, and a Guide for Using AI in Research
+
+**How Can Text Mining Reveal Patterns That Close Reading Cannot?**
+
+I cannot read 113 files carefully. Nobody can. Text mining can.
+
+When I ran the APSA jobs corpus, it found that "public policy" and "assistant professor" appeared together nearly 100,000 times across the files. I would never have caught that by reading.
+
+But text mining does not understand anything. It counts words. It cannot tell if "diversity" in a job ad is genuine or just legal cover. That part is still my job.
+
+**How Can NLP and LLM Assist My Research?**
+
+A few concrete ideas I have actually thought about.
+
+My paper is about state court decisions and labor productivity. I could use topic modeling to track how judicial language around the Good Faith exception changed over decades. That would take me years to do manually.
+
+For my Bangladesh remittance research, I could analyze Bangladesh Bank policy documents to see how the language around remittance policy shifted over time. I work there. I have those documents. This feels very doable.
+
+Claude helped me translate dense legal text into plain language when I was building my theoretical framework. That alone saved me significant time.
+
+**Limitations and Suggested Solutions**
+
+Three that I have personally experienced.
+
+Hallucination. AI cites papers that do not exist. My fix is boring but necessary — I check every single citation myself.
+
+Context blindness. NLP does not know what words mean politically. In Bangladesh policy documents, certain phrases carry weight that no algorithm would catch. Domain knowledge still matters.
+
+Language bias. Most NLP tools work best in English. My Bangladesh research involves Bengali documents. Multilingual models exist but they are less reliable. I do not have a good solution for this yet.
+
+**An AI for Research Guide: Be Careful**
+
+A few honest rules I follow.
+
+Know your question before asking AI. It will answer confidently even if the question is wrong.
+
+Verify every citation. Every single one.
+
+Test every line of code. AI code looks clean and breaks quietly.
+
+Disclose AI use. Always. No exceptions.
+
+Do not let AI do your thinking. It can summarize. It cannot tell you what matters for your specific question. That is your job and nobody else's.
+
+Hinton warned that we might outsource our thinking and forget how to think. I take that seriously.
+
+------------------------------------------------------------------------
+
+## Week 9 {#week9}
+
+#### April 7, 2026
+
+### What LLMs Do Well, Where They Fail, and What Comes Next
+
+**What LLMs Do Well and Where They Fail**
+
+LLMs are remarkable at certain things. Summarizing long texts. Cleaning up writing. Explaining complicated concepts in plain language. For someone like me — working in a third language — that last one matters a lot.
+
+But they fail in ways that are hard to predict. And that unpredictability is the real problem.
+
+My favorite example is not academic. I asked ChatGPT about Bangladesh's political situation in early 2025. It told me Sheikh Hasina was still Prime Minister. She was ousted in August 2024 following a mass uprising. I corrected it. It argued with me. Confidently. I was so amused I took a screenshot and posted it on Facebook.
+
+Funny story. But the same failure mode shows up in serious research contexts too.
+
+When I was working on my MPSA paper on employment protection and labor productivity, I asked Claude to suggest relevant citations on wrongful discharge laws. It gave me a list. Beautifully formatted. Proper APA style. Several of them did not exist. One paper had the right authors but the wrong journal, wrong year, and wrong title. It looked real enough that I almost used it.
+
+Now I check everything. Every single citation. That is my personal tax for using AI in research.
+
+**How Generative AI Will Reshape Public Policy Research**
+
+In five years, I think certain research tasks will look very different.
+
+Literature reviews will be almost fully automated. What takes me weeks will take minutes. That is genuinely exciting. It also means the bar for original contribution will rise. If anyone can survey a literature instantly, the value shifts to asking better questions.
+
+Data collection will change too. NLP tools will make it easier to analyze policy documents, court decisions, legislative texts at scale. For my research on wrongful discharge laws, this could mean tracking judicial language across all 50 states over decades — something that is practically impossible today.
+
+But some things should stay human.
+
+Causal identification is one. Deciding whether a research design actually isolates a treatment effect requires judgment that I do not trust AI to make. My staggered DiD design for the WDL paper involved dozens of small decisions about sample construction, control variables, and interpretation. Those decisions reflect theoretical commitments. AI does not have those.
+
+Policy interpretation is another. Numbers from a regression do not speak for themselves. Saying that Good Faith exception adoption reduces productivity by 53% relative to median EBIT is a finding. Explaining what that means for workers, firms, and policymakers — that requires human judgment, institutional knowledge, and ethical responsibility.
+
+AI can help me find the pattern. It cannot tell me what the pattern means. That part stays with me.
+
+------------------------------------------------------------------------
+
+## Week 10 {#week10}
+
+#### April 14, 2026
+
+### What is RAG and Why Does It Matter?
+
+**What is RAG and Why Does It Matter?**
+
+RAG stands for Retrieval-Augmented Generation. The name sounds complicated. The idea is not.
+
+A regular LLM only knows what it was trained on. Ask it about something recent and it either guesses or gets it wrong. Ask it about Sheikh Hasina and it will tell you she is still Prime Minister.
+
+RAG fixes this by giving the model access to external documents before it answers. Instead of guessing, it retrieves relevant information first and then generates a response based on what it actually found. It is like the difference between asking someone a question from memory versus letting them look it up first.
+
+For research, this matters. A RAG system grounded in actual policy documents or court decisions would be far more reliable than a regular LLM making things up. The answer is connected to a real source. That is a meaningful improvement.
+
+**Recent Criticisms and Suggestions**
+
+RAG is not perfect though. A few criticisms I have come across:
+
+It is only as good as what it retrieves. If the retrieved documents are wrong or irrelevant, the answer will be too. Garbage in, garbage out.
+
+It can still hallucinate. Even with retrieved documents, the model sometimes ignores them and makes things up anyway.
+
+It struggles with complex questions that require reasoning across multiple documents.
+
+Suggested improvements I have seen discussed: better retrieval methods, teaching models to say "I don't know" when retrieved documents are insufficient, and combining RAG with human verification for high-stakes outputs.
+
+That last one sounds familiar. It is basically what I already do manually.
+
+------------------------------------------------------------------------
+
+## Week 11 {#week11}
+
+#### April 28, 2026
+
+### Knowledge Graphs and My Research
+
+**What is a Knowledge Graph?**
+
+A traditional database stores data in rows and columns. It is good at answering simple questions. How many firms adopted the Good Faith exception? What is the average productivity?
+
+A vector store is different. It stores text as numbers and finds things that are similar in meaning. Useful for search.
+
+A knowledge graph does something neither can do well. It stores *relationships* between things. Not just what exists, but how things connect to each other.
+
+That difference matters. A database can tell me that a firm is in Texas and Texas adopted the Good Faith exception in 1985. But it cannot easily tell me how that legal change rippled through the firm's hiring decisions, productivity, and financial leverage all at once. A knowledge graph can.
+
+**Three Entities and Three Relationships from My Research**
+
+My MPSA paper gives me a natural starting point.
+
+*Entities:*
+
+-   Wrongful Discharge Laws
+-   Firms
+-   Labor Productivity
+
+*Relationships:*
+
+-   Wrongful Discharge Laws *constrain* Firms
+-   Firms *generate* Labor Productivity
+-   Wrongful Discharge Laws *reduce* Labor Productivity
+
+This seems simple. But even this small graph can answer questions a flat dataset cannot.
+
+For example — which firms were most affected by WDL adoption? A flat dataset gives me a coefficient. A knowledge graph lets me trace the path. It shows that large firms adapted through temporary staffing, which buffered the productivity effect. Smaller firms could not do that. The relationship tells a richer story than the number alone.
+
+That is perhaps the most useful thing about knowledge graphs. They do not just store answers. They store the logic connecting the answers.
+
+------------------------------------------------------------------------
+
+## Week 12 {#week12}
+
+#### May 5, 2026
+
+### AI for Science and Agentic AI
+
+**What Does "AI for Science" Mean?**
+
+AI for Science means using AI not just to write or summarize, but to actually help do research. Finding patterns in data. Generating hypotheses. Running analyses. It is AI as a research tool, not just a writing tool.
+
+For someone like me, that distinction matters. I already use Claude and ChatGPT to clean up my writing. That is useful but not transformative. AI for Science is something bigger. It is about using AI to do things that would otherwise take months.
+
+**How Agentic AI Changes the Research Workflow**
+
+A regular AI interaction is simple. I ask a question. It answers. That is it.
+
+Agentic AI is different. It can plan. It can use tools. It can take multiple steps without me asking each time.
+
+Let me use my MPSA paper as an example. That paper required several distinct tasks. Downloading Compustat data. Cleaning 91,974 firm-year observations. Running staggered difference-in-differences regressions. Checking parallel trends. Running entropy balancing. Writing it all up.
+
+I did each of these steps separately. Manually. It took months.
+
+An agentic AI system could potentially handle several of these steps in sequence. It could download the data, flag missing observations, suggest appropriate control variables, and run robustness checks — all without me prompting each step individually.
+
+That is not science fiction. It is already partially possible.
+
+But I am cautious about one thing. The decisions in my paper were not just technical. Choosing the Good Faith exception as the primary treatment variable was a theoretical decision. Deciding to use EBIT per employee instead of other productivity measures was a judgment call. Interpreting the 53% productivity decline required institutional knowledge about how U.S. labor law actually works.
+
+Agentic AI can run the analysis. It cannot make those judgments. At least not yet.
+
+So for now, the workflow I imagine is this. AI handles the mechanical steps. I handle the thinking. That is perhaps the most honest description of where we are in 2026.
+
+------------------------------------------------------------------------
+
+::: {.callout-tip appearance="minimal"}
+## AI Use Disclosure
+
+These reflections were written with assistance from Claude (Anthropic) and ChatGPT (OpenAI). These tools helped with language editing and drafting. English is my third language and AI assistance helped me express my ideas more clearly.
+
+All research examples, personal experiences, and opinions are my own. The Sheikh Hasina example is real. The citation failures are real. The frustration with broken code is very real.
+
+Final decisions on content and argument were made by me. AI did not generate the ideas — it helped me write them down.
+:::

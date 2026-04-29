@@ -1,0 +1,563 @@
+---
+title: "Assignment 4: Text Analytics using quanteda"
+author: "Md Khalid Bin Kamal"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: cosmo
+    code-fold: true
+    code-tools: true
+    self-contained: true
+execute:
+  warning: false
+  message: false
+---
+
+## 1. Introduction to quanteda
+
+[quanteda](https://tutorials.quanteda.io/) (Quantitative Analysis of Textual Data) is an R package for managing and analyzing text. The core workflow is:
+
+**Text → Corpus → Tokens → DFM → Analysis**
+
+-   **Corpus**: stores raw texts with document-level metadata
+-   **Tokens**: word/sentence units after splitting the text
+-   **DFM** (Document-Feature Matrix): rows = documents, columns = word features, cells = counts
+
+```{r}
+#| label: setup
+
+library(quanteda)
+library(quanteda.textstats)
+library(quanteda.textplots)
+library(quanteda.textmodels)
+library(readtext)
+library(pdftools)
+library(ggplot2)
+library(dplyr)
+
+# Full path to website project folder
+base_path <- "/Users/md.khalidbinkamal/Documents/R practice/Knowledge Mining/Website/khalidbinkamal.github.io"
+```
+
+------------------------------------------------------------------------
+
+## 2a. US Presidential Inaugural Speeches
+
+### Build Corpus and DFM
+
+```{r}
+#| label: inaug-corpus
+
+corp_inaug <- data_corpus_inaugural
+summary(corp_inaug, 10)
+```
+
+```{r}
+#| label: inaug-dfm
+
+toks_inaug <- tokens(corp_inaug,
+                     remove_punct   = TRUE,
+                     remove_numbers = TRUE,
+                     remove_symbols = TRUE) |>
+  tokens_remove(stopwords("en")) |>
+  tokens_wordstem()
+
+dfm_inaug <- dfm(toks_inaug) |>
+  dfm_trim(min_termfreq = 5)
+
+dfm_inaug
+```
+
+### Top Features
+
+```{r}
+#| label: top-features
+
+topfeatures(dfm_inaug, 20)
+```
+
+### Word Cloud
+
+```{r}
+#| label: wordcloud-inaug
+#| fig-cap: "Most frequent words across all inaugural addresses"
+
+set.seed(42)
+textplot_wordcloud(dfm_inaug,
+                   max_words = 100,
+                   color     = RColorBrewer::brewer.pal(8, "Dark2"),
+                   rotation  = 0.25)
+```
+
+### Word Frequency Over Time
+
+```{r}
+#| label: freq-time
+#| fig-cap: "Frequency of key terms across presidential eras"
+
+key_words <- c("nation", "freedom", "terror", "economi", "peac", "god")
+
+freq_time <- textstat_frequency(dfm_inaug,
+                                groups = docvars(dfm_inaug, "Year")) |>
+  filter(feature %in% key_words)
+
+ggplot(freq_time, aes(x = as.numeric(group), y = frequency, color = feature)) +
+  geom_line(alpha = 0.7) +
+  geom_point(size = 1.5) +
+  facet_wrap(~feature, scales = "free_y", ncol = 3) +
+  theme_minimal(base_size = 10) +
+  labs(title = "Key Word Frequencies in Inaugural Addresses Over Time",
+       x = "Year", y = "Frequency") +
+  theme(legend.position = "none",
+        strip.text = element_text(face = "bold"))
+```
+
+### Cosine Similarity Among Presidents (Post-1960)
+
+```{r}
+#| label: similarity
+#| fig-cap: "Cosine similarity heatmap — post-1960 inaugural addresses"
+
+dfm_modern <- dfm_subset(dfm_inaug, Year >= 1960)
+
+sim_mat <- textstat_simil(dfm_modern, method = "cosine", margin = "documents")
+sim_df  <- as.data.frame(as.matrix(sim_mat))
+
+sim_long <- sim_df |>
+  tibble::rownames_to_column("doc1") |>
+  tidyr::pivot_longer(-doc1, names_to = "doc2", values_to = "similarity")
+
+ggplot(sim_long, aes(x = doc1, y = doc2, fill = similarity)) +
+  geom_tile(color = "white", linewidth = 0.4) +
+  scale_fill_gradient(low = "white", high = "steelblue") +
+  theme_minimal(base_size = 8) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(title = "Cosine Similarity — Presidential Inaugural Addresses (1961–)",
+       x = NULL, y = NULL, fill = "Similarity")
+```
+
+### Keyness: Post-2000 vs Pre-2000
+
+```{r}
+#| label: keyness
+#| fig-cap: "Words uniquely associated with post-2000 vs pre-2000 speeches"
+
+dfm_era <- dfm_inaug |>
+  dfm_group(groups = ifelse(docvars(dfm_inaug, "Year") >= 2000,
+                            "Post-2000", "Pre-2000"))
+
+keyness <- textstat_keyness(dfm_era, target = "Post-2000")
+
+textplot_keyness(keyness, n = 20,
+                 color = c("steelblue", "firebrick")) +
+  labs(title   = "Keyness: Post-2000 vs Pre-2000 Inaugural Addresses",
+       caption = "Blue = more common post-2000 | Red = more common pre-2000")
+```
+
+### Feature Co-occurrence Network
+
+```{r}
+#| label: fcm-network
+#| fig-cap: "Feature co-occurrence network — top 50 features"
+
+fcm_inaug <- fcm(toks_inaug,
+                 context = "window",
+                 window  = 5,
+                 tri     = TRUE)
+
+top50   <- names(topfeatures(dfm_inaug, 50))
+fcm_top <- fcm_select(fcm_inaug, pattern = top50)
+
+textplot_network(fcm_top,
+                 min_freq         = 0.75,
+                 vertex_labelsize = 3,
+                 edge_color       = "steelblue",
+                 edge_alpha       = 0.5)
+```
+
+### Observations: Similarities and Differences
+
+**Similarities across all presidents:**
+
+-   Themes of *nation*, *people*, *government*, *freedom*, and *democracy* are universally present — the inaugural address is a ritual reaffirmation of American civic values regardless of party or era.
+-   All speeches invoke a sense of historical continuity and future promise.
+
+**Differences over time:**
+
+-   **19th-century** speeches are substantially longer, more formal, and reference *constitution*, *union*, and *slavery* prominently.
+-   **Post-9/11 speeches** show markedly higher frequency of *terror* and *security*.
+-   **Recent speeches** use shorter sentences and more accessible, populist vocabulary.
+
+**Differences among presidents:**
+
+-   Reagan and Trump share nationalistic framing (*great*, *America*, *strength*).
+-   Obama and Clinton emphasize *hope*, *change*, *together*, and inclusive language.
+-   The cosine similarity matrix reveals that speeches cluster by era more than by party — historical context shapes language more than ideology alone.
+
+------------------------------------------------------------------------
+
+## 2b. US Department of Defense Reports on China (1999–2025)
+
+The USDOD corpus consists of **27 annual reports** to Congress on *Military and Security Developments Involving the People's Republic of China*, spanning 1999 to 2025. This is an ideal corpus for tracking how US strategic language about China has evolved over 25+ years.
+
+### Load and Build Corpus
+
+```{r}
+#| label: dod-load
+
+dod_path  <- file.path(base_path, "USDOD")
+dod_files <- readtext(paste0(dod_path, "/*.pdf"))
+
+# Extract year from filename for use as document variable
+dod_files$year <- as.integer(
+  regmatches(dod_files$doc_id,
+             regexpr("\\d{4}", dod_files$doc_id))
+)
+
+corp_dod <- corpus(dod_files)
+docvars(corp_dod, "year") <- dod_files$year
+
+cat("Number of DOD reports loaded:", ndoc(corp_dod), "\n")
+summary(corp_dod)
+```
+
+### Tokenise and Build DFM
+
+```{r}
+#| label: dod-dfm
+
+toks_dod <- tokens(corp_dod,
+                   remove_punct   = TRUE,
+                   remove_numbers = TRUE,
+                   remove_symbols = TRUE) |>
+  tokens_remove(stopwords("en")) |>
+  tokens_wordstem()
+
+dfm_dod <- dfm(toks_dod) |>
+  dfm_trim(min_termfreq = 10, min_docfreq = 3)
+
+dfm_dod
+```
+
+### Word Cloud — DOD Reports
+
+```{r}
+#| label: dod-wordcloud
+#| fig-cap: "Most frequent terms across all DOD China reports (1999–2025)"
+
+set.seed(42)
+textplot_wordcloud(dfm_dod,
+                   max_words = 80,
+                   color     = RColorBrewer::brewer.pal(9, "Blues")[4:9])
+```
+
+### Top Features
+
+```{r}
+#| label: dod-topfeatures
+
+topfeatures(dfm_dod, 25)
+```
+
+### Keyness: Post-2015 vs Pre-2015 Reports
+
+```{r}
+#| label: dod-keyness
+#| fig-cap: "Terms that distinguish recent vs earlier DOD China reports"
+
+dfm_dod_era <- dfm_dod |>
+  dfm_group(groups = ifelse(docvars(corp_dod, "year") >= 2015,
+                            "Post-2015", "Pre-2015"))
+
+keyness_dod <- textstat_keyness(dfm_dod_era, target = "Post-2015")
+
+textplot_keyness(keyness_dod, n = 20,
+                 color = c("steelblue", "firebrick")) +
+  labs(title   = "Keyness: Post-2015 vs Pre-2015 DOD China Reports",
+       caption = "Blue = more common post-2015 | Red = more common pre-2015")
+```
+
+------------------------------------------------------------------------
+
+## 3. What is Wordfish?
+
+**Wordfish** (Slapin & Proksch, 2008) is an **unsupervised, Poisson-based text scaling model**. It estimates each document's position on a single latent dimension purely from word frequencies — without needing pre-labelled reference texts.
+
+The model assumes word counts follow a Poisson distribution:
+
+$$y_{ij} \sim \text{Poisson}(\mu_{ij}), \quad \log(\mu_{ij}) = \alpha_i + \psi_j + \beta_j \cdot \omega_i$$
+
+| Parameter | Meaning |
+|------------------------------------|------------------------------------|
+| $\omega_i$ | **Document position** — what we want to estimate |
+| $\alpha_i$ | Document fixed effect (controls for document length) |
+| $\psi_j$ | Word fixed effect (controls for overall word frequency) |
+| $\beta_j$ | Word discrimination parameter (how strongly a word signals position) |
+
+**Key advantage over Wordscores:** Wordfish is fully unsupervised — no anchor or reference documents needed. The trade-off is that the latent dimension must be interpreted by the researcher after estimation.
+
+Applied to the DOD China reports, Wordfish will reveal a latent dimension capturing the shift in US strategic rhetoric — likely from a **cooperative/engagement framing** (early 2000s) toward an increasingly **competitive/confrontational framing** (post-2015).
+
+### Run Wordfish on DOD Reports
+
+```{r}
+#| label: wordfish-run
+
+# dir = c(1, 2) anchors the scale:
+# document 1 (1999 report) placed LEFT of document 2 (2000 report)
+# This preserves rough chronological ordering on the latent axis
+tmod_wf <- textmodel_wordfish(dfm_dod, dir = c(1, 2))
+summary(tmod_wf)
+```
+
+### Plot Document Positions
+
+```{r}
+#| label: wordfish-docs
+#| fig-cap: "Estimated positions of DOD China reports on latent strategic dimension"
+
+textplot_scale1d(tmod_wf, margin = "documents") +
+  labs(title    = "Wordfish Scaling — DOD China Reports (1999–2025)",
+       subtitle = "Position on latent strategic-language dimension",
+       x        = "Estimated Position (θ)",
+       y        = "Report")
+```
+
+### Plot Word Discrimination (Eiffel Plot)
+
+```{r}
+#| label: wordfish-words
+#| fig-cap: "Word positions and discrimination parameters"
+
+textplot_scale1d(tmod_wf,
+                 margin      = "features",
+                 highlighted = c("china", "militari", "nuclear", "cyber",
+                                 "threat", "compet", "cooper", "engag",
+                                 "taiwan", "innov", "budget", "allianc",
+                                 "aggress", "strateg", "pla")) +
+  labs(title = "Wordfish — Word Positions (β) in DOD China Reports",
+       x     = "Word Position (β)",
+       y     = "Word Fixed Effect (ψ)")
+```
+
+### Document Positions with Confidence Intervals
+
+```{r}
+#| label: wordfish-ci
+#| fig-cap: "DOD China report positions with 95% confidence intervals"
+
+positions <- data.frame(
+  document = docnames(dfm_dod),
+  year     = docvars(corp_dod, "year"),
+  theta    = tmod_wf$theta,
+  se       = tmod_wf$se.theta
+)
+
+ggplot(positions, aes(x = year, y = theta)) +
+  geom_ribbon(aes(ymin = theta - 1.96 * se,
+                  ymax = theta + 1.96 * se),
+              fill = "steelblue", alpha = 0.2) +
+  geom_line(color = "steelblue", linewidth = 1) +
+  geom_point(color = "steelblue", size = 2.5) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
+  theme_minimal(base_size = 11) +
+  labs(title    = "US DOD Rhetoric on China — Wordfish Position Over Time",
+       subtitle = "Positive θ = more recent/competitive framing | Negative θ = earlier/cooperative framing",
+       x        = "Year",
+       y        = "Estimated Position (θ)")
+```
+
+------------------------------------------------------------------------
+
+## 4. How to Compare Positions
+
+Text scaling methods place documents on a meaningful political or thematic dimension. The three main approaches are:
+
+| Method | Type | Requires Reference Texts? | Best For |
+|------------------|------------------|------------------|------------------|
+| **Wordfish** | Unsupervised | No | Discovering a natural scale from word frequencies alone |
+| **Wordscores** | Supervised | Yes (anchor texts with known scores) | Scoring new texts relative to known positions |
+| **Correspondence Analysis** | Unsupervised | No | Visualising multi-dimensional doc–word relationships |
+
+**Wordfish** is ideal here — it discovers the dominant dimension of variation in the DOD corpus without any labels. The latent dimension naturally captures the shift from engagement-era language to competition-era language across 25 years of reports.
+
+**Wordscores** would require us to assign known reference scores to at least two documents first — for example, scoring the 1999 report as "cooperative" (-1) and the 2025 report as "confrontational" (+1), then interpolating all others.
+
+```{r}
+#| label: wordscores-demo
+#| eval: false
+
+# Wordscores example — not run (requires manually assigned reference scores)
+ref_scores <- rep(NA, ndoc(dfm_dod))
+ref_scores[1] <- -1   # 1999 report: cooperative/engagement framing
+ref_scores[ndoc(dfm_dod)] <- 1  # 2025 report: competitive/confrontational
+
+tmod_ws <- textmodel_wordscores(dfm_dod, y = ref_scores, smooth = 1)
+pred_ws <- predict(tmod_ws, newdata = dfm_dod, se.fit = TRUE)
+textplot_scale1d(pred_ws)
+```
+
+------------------------------------------------------------------------
+
+## 5. Hackathon: APSA eJobs Text Analytics
+
+```{r}
+#| label: apsa-load
+
+apsa_path  <- file.path(base_path, "APSA")
+apsa_files <- readtext(paste0(apsa_path, "/*"))
+
+corp_apsa <- corpus(apsa_files)
+cat("Number of job postings:", ndoc(corp_apsa), "\n")
+summary(corp_apsa, 5)
+```
+
+### Tokenise and Build DFM
+
+```{r}
+#| label: apsa-dfm
+
+toks_apsa <- tokens(corp_apsa,
+                    remove_punct   = TRUE,
+                    remove_numbers = TRUE,
+                    remove_symbols = TRUE) |>
+  tokens_remove(stopwords("en")) |>
+  tokens_wordstem()
+
+dfm_apsa <- dfm(toks_apsa) |>
+  dfm_trim(min_termfreq = 3, min_docfreq = 2)
+
+dfm_apsa
+```
+
+### Word Cloud — Job Postings
+
+```{r}
+#| label: apsa-wordcloud
+#| fig-cap: "Most frequent terms in APSA eJobs postings"
+
+set.seed(42)
+textplot_wordcloud(dfm_apsa,
+                   max_words = 100,
+                   color     = RColorBrewer::brewer.pal(8, "Set2"),
+                   rotation  = 0.15)
+```
+
+### Top Features
+
+```{r}
+#| label: apsa-topfeatures
+
+topfeatures(dfm_apsa, 30)
+```
+
+### Subfield Demand Analysis
+
+```{r}
+#| label: subfield-demand
+#| fig-cap: "Frequency of political science subfields in job postings"
+
+subfields <- c("comparativ", "intern", "american", "quantit", "qualit",
+               "theoret", "public", "race", "gender", "method",
+               "causal", "experiment", "survei", "conflict", "secur")
+
+subfield_freq <- textstat_frequency(dfm_apsa) |>
+  filter(feature %in% subfields) |>
+  arrange(desc(frequency))
+
+ggplot(subfield_freq, aes(x = frequency, y = reorder(feature, frequency))) +
+  geom_col(fill = "steelblue", alpha = 0.8) +
+  geom_text(aes(label = frequency), hjust = -0.2, size = 3) +
+  theme_minimal(base_size = 10) +
+  labs(title = "Subfield & Method Demand in APSA eJobs",
+       x     = "Frequency",
+       y     = "Term (stemmed)")
+```
+
+### Multi-Word Phrases (Collocations)
+
+```{r}
+#| label: apsa-collocations
+
+collocations <- textstat_collocations(toks_apsa,
+                                      size      = 2,
+                                      min_count = 5)
+head(collocations, 20)
+```
+
+### Keyness: Methods vs Other Jobs
+
+```{r}
+#| label: apsa-keyness
+
+# Use broad terms to capture research/methods postings
+is_methods <- grepl("research|analys|data|quant|empir|statist|method",
+                    as.character(corp_apsa),
+                    ignore.case = TRUE)
+
+cat("Methods-focused postings:", sum(is_methods), "\n")
+cat("Other postings:", sum(!is_methods), "\n")
+
+# Only run keyness if both groups have documents
+if (sum(is_methods) > 0 & sum(!is_methods) > 0) {
+  dfm_apsa_grp <- dfm_apsa |>
+    dfm_group(groups = ifelse(is_methods, "Methods", "Other"))
+  key_apsa <- textstat_keyness(dfm_apsa_grp, target = "Methods")
+  textplot_keyness(key_apsa, n = 20,
+                   color = c("steelblue", "firebrick")) +
+    labs(title = "Keyness: Research/Methods-focused vs Other APSA Job Ads")
+} else {
+  cat("All documents fall into one group — showing top features instead:\n")
+  print(topfeatures(dfm_apsa, 20))
+}
+```
+
+### Feature Co-occurrence Network
+
+```{r}
+#| label: apsa-fcm
+#| fig-cap: "Co-occurrence of key skills and subfields in job postings"
+
+fcm_apsa     <- fcm(toks_apsa, context = "window", window = 5, tri = TRUE)
+top_apsa     <- names(topfeatures(dfm_apsa, 60))
+fcm_apsa_top <- fcm_select(fcm_apsa, pattern = top_apsa)
+
+textplot_network(fcm_apsa_top,
+                 min_freq         = 0.7,
+                 vertex_labelsize = 3,
+                 edge_color       = "steelblue",
+                 edge_alpha       = 0.4)
+```
+
+### Wordfish Scaling — APSA Jobs
+
+```{r}
+#| label: apsa-wordfish
+#| fig-cap: "Wordfish scaling of APSA job postings"
+
+tmod_wf_apsa <- textmodel_wordfish(dfm_apsa, dir = c(1, 2))
+
+textplot_scale1d(tmod_wf_apsa, margin = "documents") +
+  labs(title    = "Wordfish Scaling — APSA eJob Postings",
+       subtitle = "Documents positioned on latent demand dimension",
+       x        = "Estimated Position (θ)")
+```
+
+------------------------------------------------------------------------
+
+## Summary
+
+| Task | Method | Key Finding |
+|------------------------|------------------------|------------------------|
+| Inaugural speeches — frequency | DFM + wordcloud | *Nation*, *people*, *freedom* dominate across all eras |
+| Inaugural speeches — change over time | Keyness | Post-2000 speeches emphasise *terror* and *security* |
+| Inaugural speeches — similarity | Cosine similarity | Speeches cluster by era more than by party |
+| DOD China reports — content | DFM + wordcloud | Military, strategic, and China-specific vocabulary dominates |
+| DOD China reports — evolution | Keyness | Post-2015 reports show sharper competitive/threat framing |
+| DOD China reports — position scaling | Wordfish | Reports shift from cooperative to confrontational over 25 years |
+| APSA jobs — subfield demand | Frequency + bar chart | Quantitative methods most in demand |
+| APSA jobs — distinguishing features | Keyness + FCM | Methods jobs cluster around causal inference and statistics |
+
+**Wordfish** is the most powerful tool here: applied to the DOD China corpus, it quantitatively captures the well-documented shift in US strategic thinking — from the engagement-era language of the early 2000s to the competitive, threat-focused framing that dominates post-2015 reports — without imposing any prior labels.

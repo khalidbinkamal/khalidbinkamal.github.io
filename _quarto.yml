@@ -1,0 +1,40 @@
+project:
+  type: website
+  output-dir: docs 
+  resources:
+    - "cv.pdf"      
+
+website:
+  title: "Md Khalid Bin Kamal"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: about.qmd
+        text: About
+      - href: cv.pdf
+        text: CV
+      - href: research.qmd
+        text: Research
+      - text: Assignments
+        menu:
+          - href: assignment1.html 
+            text: Assignment 1
+          - href: assignment2.html 
+            text: Assignment 2
+          - href: assignment3.html 
+            text: Assignment 3
+          - href: assignment4.html 
+            text: Assignment 4
+      - href: weeklyreflections.qmd
+        text: Weekly Reflections
+
+format:
+  html:
+    theme:
+      - flatly
+      - brand
+    css: styles.css
+    toc: true
+
+editor: visual
